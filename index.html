@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Valentine's Special // SIYA ji !!! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #0a0005; color: white; font-family: 'Poppins', sans-serif; }
+        .romantic-font { font-family: 'Dancing Script', cursive; }
+        .royal-font { font-family: 'Great Vibes', cursive; }
+
+        /* Cinematic Motion Blur Slider */
+        .scene-wrapper { display: flex; width: 600vw; height: 100vh; transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1); }
+        .scene { width: 100vw; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; text-align: center; }
+        
+        /* Motion Blur during transition */
+        .blur-effect { filter: blur(10px); scale: 0.95; transition: 0.6s; }
+
+        /* Floating Background Elements */
+        .floating-heart { position: absolute; color: #ff007f; opacity: 0.2; pointer-events: none; z-index: 1; animation: float linear infinite; }
+        @keyframes float { 0% { transform: translateY(110vh) rotate(0deg); } 100% { transform: translateY(-10vh) rotate(360deg); } }
+
+        /* UI Elements */
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,183,197,0.3); padding: 35px; border-radius: 40px; width: 90%; max-width: 450px; box-shadow: 0 15px 45px rgba(255,0,127,0.3); }
+        .nav-btn { background: linear-gradient(45deg, #ff007f, #ff69b4); color: white; padding: 15px 40px; border-radius: 50px; font-weight: bold; margin-top: 30px; border: none; cursor: pointer; box-shadow: 0 0 20px rgba(255,0,127,0.5); }
+
+        /* Final Heart & Explosion */
+        #main-heart { font-size: 120px; cursor: pointer; filter: drop-shadow(0 0 40px #ff007f); user-select: none; transition: 0.3s; }
+        #main-heart:active { transform: scale(1.3); }
+        .progress-container { width: 220px; height: 12px; background: rgba(255,255,255,0.1); border-radius: 20px; margin: 25px 0; overflow: hidden; border: 1px solid #ff007f; }
+        #progress-fill { width: 0%; height: 100%; background: #ff007f; }
+
+        /* Explosion Particles */
+        .particle { position: absolute; pointer-events: none; z-index: 2000; animation: burst 1.5s ease-out forwards; }
+        @keyframes burst { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="scene-wrapper" id="slider">
+        <section class="scene">
+            <h1 class="royal-font text-6xl text-pink-400 mb-6">14th Feb he jie aaj !!! Umwaahh !!!</h1>
+            <div class="glass-card">
+                <p class="romantic-font text-3xl mb-4 text-pink-300">My cutuu kuchupuchu Beautiful Wifey Siya,</p>
+                <p></p> Valentine, aur wahi mera purana waala Baalishpana. Ready for your surprise?</p>
+                <button class="nav-btn" onclick="nextPage(1)">Open Next  ➡️</button>
+            </div>
+        </section>
+
+        <section class="scene">
+            <h1 class="romantic-font text-5xl text-pink-500 mb-6">Suniye ab Maalkin Ji...</h1>
+            <div class="glass-card">
+                <p>Haan ji Maanta hoon kabhi kabhi main 'over-smart' ban jata hoon, par aapke bina main kuch bhi nahi.</p>
+                <p class="mt-4 italic">Happy Valentine's Day to my Maalkin jie and Boss!!! 💍</p>
+                <button class="nav-btn" onclick="nextPage(2)">Keep Scrolling ji⬇️</button>
+            </div>
+        </section>
+
+        <section class="scene">
+            <h1 class="royal-font text-5xl text-yellow-400 mb-6">Our Legacy</h1>
+            <div class="glass-card">
+                <p class="text-xl font-bold text-pink-400 mb-4">30.04 - Beginninghe hamari !! hehehe !!</p>
+                <p>New Year se Valentine tak, aur main cheez ki , ab toh aniversery bhi close he !!! yayyy !!</p>
+                <button class="nav-btn" onclick="nextPage(3)">Almost There ⬅️</button>
+            </div>
+        </section>
+
+        <section class="scene">
+            <h1 class="romantic-font text-4xl text-pink-400 mb-6">My Vows to You</h1>
+            <div class="glass-card text-left space-y-3">
+                <p>❤️ Aapka har hukum meri sar-aankhon par.</p>
+                <p>❤️ Har din aapko 'Bayko' wali respect hogi hee !!!.</p>
+                <p>❤️ Aapko duniya ki har khushi dena chahta hu yarr !! .</p>
+                <button class="nav-btn w-full" onclick="nextPage(4)">The Valentino Magic 🎁</button>
+            </div>
+        </section>
+
+        <section class="scene" id="final-scene">
+            <h1 class="royal-font text-5xl mb-6">Accept My Love?</h1>
+            <div id="main-heart">❤️</div>
+            <div class="progress-container"><div id="progress-fill"></div></div>
+            <p id="hint" class="text-pink-300 font-bold animate-pulse">HOLD THE HEART TO BLAST 💥</p>
+            <h2 id="final-msg" class="hidden text-4xl font-bold mt-4 text-pink-500 romantic-font">HAPPY VALENTINE'S DAY SIYA! ❤️🥂</h2>
+        </section>
+    </div>
+
+    <script>
+        // Floating Background Hearts
+        function spawnHearts() {
+            const symbols = ["❤️", "💖", "🌸", "Sorry na Maalkin ji", "Siya", "Bayko", "💍"];
+            const h = document.createElement('div');
+            h.className = 'floating-heart';
+            h.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            h.style.left = Math.random() * 95 + "vw";
+            h.style.fontSize = Math.random() * 20 + 15 + "px";
+            h.style.animationDuration = Math.random() * 5 + 5 + "s";
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 10000);
+        }
+        setInterval(spawnHearts, 600);
+
+        // Page Navigation with Motion Blur
+        const slider = document.getElementById('slider');
+        function nextPage(idx) {
+            slider.style.transform = `translateX(-${idx * 100}vw)`;
+            // Add blur effect during move
+            document.querySelectorAll('.scene').forEach(s => s.classList.add('blur-effect'));
+            setTimeout(() => {
+                document.querySelectorAll('.scene').forEach(s => s.classList.remove('blur-effect'));
+            }, 1000);
+        }
+
+        // Final Hold & Explosion
+        const heart = document.getElementById('main-heart');
+        const fill = document.getElementById('progress-fill');
+        let prog = 0;
+        let timer;
+
+        function startHold() {
+            timer = setInterval(() => {
+                if (prog < 100) {
+                    prog += 2;
+                    fill.style.width = prog + "%";
+                } else {
+                    clearInterval(timer);
+                    triggerValentineExplosion();
+                }
+            }, 50);
+        }
+
+        function triggerValentineExplosion() {
+            document.getElementById('hint').classList.add('hidden');
+            document.getElementById('final-msg').classList.remove('hidden');
+            heart.innerText = "💍";
+            
+            // Mega Explosion of Firecrackers & Hearts
+            for(let i=0; i<80; i++) {
+                setTimeout(spawnExplosion, i * 80);
+            }
+
+            // High Speed Rain
+            setInterval(spawnHeavyRain, 60);
+
+            setTimeout(() => {
+                window.location.href = "";
+            }, 10000);
+        }
+
+        function spawnExplosion() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            const colors = ['#ff007f', '#ffd700', '#ffffff', '#ff69b4', '#ff1493'];
+            
+            for(let i=0; i<15; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+                p.style.width = '6px';
+                p.style.height = '6px';
+                p.style.borderRadius = '50%';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.boxShadow = `0 0 20px ${p.style.background}`;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 200 + 50;
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist;
+                
+                p.style.transition = "all 0.8s cubic-bezier(0.1, 0.5, 0.3, 1)";
+                document.body.appendChild(p);
+                
+                setTimeout(() => {
+                    p.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
+                    p.style.opacity = '0';
+                }, 10);
+                setTimeout(() => p.remove(), 1000);
+            }
+        }
+
+        function spawnHeavyRain() {
+            const r = document.createElement('div');
+            r.style.position = 'fixed';
+            r.style.top = '-5vh';
+            r.style.left = Math.random() * 100 + 'vw';
+            r.innerText = ["🌸", "💍", "❤️", "💋", "💖", "🔥"][Math.floor(Math.random()*6)];
+            r.style.fontSize = Math.random() * 25 + 20 + "px";
+            r.style.zIndex = "1000";
+            r.style.animation = `fall ${Math.random() * 2 + 2}s linear forwards`;
+            document.body.appendChild(r);
+            setTimeout(() => r.remove(), 3000);
+        }
+
+        const fallStyle = document.createElement('style');
+        fallStyle.innerHTML = `@keyframes fall { 0% { transform: translateY(0) rotate(0); } 100% { transform: translateY(110vh) rotate(360deg); } }`;
+        document.head.appendChild(fallStyle);
+
+        heart.addEventListener('mousedown', startHold);
+        heart.addEventListener('touchstart', (e) => { e.preventDefault(); startHold(); });
+        heart.addEventListener('mouseup', () => { clearInterval(timer); if(prog<100){prog=0; fill.style.width="0%";} });
+        heart.addEventListener('touchend', () => { clearInterval(timer); if(prog<100){prog=0; fill.style.width="0%";} });
+    </script>
+</body>
+</html>
